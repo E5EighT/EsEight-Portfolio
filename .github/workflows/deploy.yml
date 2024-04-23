@@ -1,4 +1,4 @@
-# Simple workflow for deploying static content to GitHub Pages
+. # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
 on:
@@ -37,6 +37,13 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: Create .env.production
+        run: |
+          echo "VITE_SOME_SERVICE=${{ secrets.VITE_SOME_SERVICE }}" > .env.production
+          echo "VITE_SOME_TEMPLATE=${{ secrets.VITE_SOME_TEMPLATE }}" >> .env.production
+          echo "VITE_SOME_KEY=${{ secrets.VITE_SOME_KEY }}" >> .env.production
+      - name: Display .env.production
+        run: cat .env.production
       - name: Build
         run: npm run build
       - name: Copy assets
